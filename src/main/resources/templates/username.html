@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.0.1/css/bootstrap.css">
+<head>
+    <title>Новая игра</title>
+</head>
+<body>
+<h1 class="btn-outline-primary">Новая игра</h1>
+<p>
+<form method="post" action="/username" name="username" enctype="application/x-www-form-urlencoded"
+      th:object="${usernameForm}">
+    <label> Введите имя:
+        <input type="text" class="text-black-50"/>
+        <div th:each="error : ${#fields.errors('username')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+        <input type="submit" class="btn btn-dark btn-sm" name="Enter" value="Enter">
+    </label>
+</form>
+</p>
+</body>
+</html>
