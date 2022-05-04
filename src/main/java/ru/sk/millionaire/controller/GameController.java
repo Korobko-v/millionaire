@@ -30,4 +30,14 @@ public class GameController {
     public UsernameForm createDefaultUsernameForm() {
         return new UsernameForm();
     }
+
+    @GetMapping("/game")
+    public String showGamePage() {
+        return "game";
+    }
+
+    @PostMapping("/game")
+    public String handleGamePage() {
+        return "game";
+    }
 }

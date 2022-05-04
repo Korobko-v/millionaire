@@ -11,9 +11,10 @@
       th:object="${usernameForm}">
     <label> Введите имя:
         <input type="text" class="text-black-50"/>
-        <div th:each="error : ${#fields.errors('username')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
         <input type="submit" class="btn btn-dark btn-sm" name="Enter" value="Enter">
     </label>
+    <div th:each="error : ${#fields.errors('username')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+
 </form>
 </p>
 </body>
