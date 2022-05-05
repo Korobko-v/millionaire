@@ -7,10 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.sk.millionaire.model.Question;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
+import ru.sk.millionaire.repository.QuestionRepository;
 import ru.sk.millionaire.repository.UserRepository;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -20,11 +23,22 @@ public class MainPageController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private QuestionRepository questionRepository;
+
     @GetMapping("/userspage")
     public String usersTable(Model model) {
         List<User> userList = userRepository.findAll();
+        userList.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));
         model.addAttribute("userList", userList);
         return "userspage";
+    }
+
+    @GetMapping("/questions")
+    public String questionsTable(Model model) {
+        List<Question> questionsList = questionRepository.findAll();
+        model.addAttribute("questionsList", questionsList);
+        return "questions";
     }
 
     @GetMapping

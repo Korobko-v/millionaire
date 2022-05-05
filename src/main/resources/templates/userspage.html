@@ -7,6 +7,12 @@
 <body>
 <table class="table table-striped">
     <tbody th:if="${not #lists.isEmpty(userList)}">
+    <tr>
+        <th>ID</th>
+        <th>Имя пользователя</th>
+        <th>Роль</th>
+        <th>Статус</th>
+    </tr>
     <th:block th:each="u : ${userList}">
         <tr>
             <td th:text="${u.id}"></td>

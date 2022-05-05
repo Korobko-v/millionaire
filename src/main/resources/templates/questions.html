@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.0.1/css/bootstrap.css">
+<head>
+    <title>Вопросы</title>
+</head>
+<body>
+<table class="table table-striped">
+    <tbody th:if="${not #lists.isEmpty(questionsList)}">
+    <tr>
+        <th>ID</th>
+        <th>Вопрос</th>
+        <th>Уровень сложности</th>
+    </tr>
+    <th:block th:each="q:${questionsList}">
+        <tr>
+            <td th:text="${q.id}"></td>
+            <td th:text="${q.question_text}"></td>
+            <td th:text="${q.level}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+    <tbody th:if="${#lists.isEmpty(questionsList)}">
+    <tr>
+        <td>Вопросов не найдено</td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    <a href="/main" class="btn btn-outline-dark">На главную</a>
+</p>
+
+</body>
+</html>

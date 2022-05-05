@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.0.1/css/bootstrap.css">
 <head>
-    <title>Новая игра</title>
+    <h1>
+        <p class="text-dark">Новая игра</p>
+    </h1>
 </head>
 <body>
-<h1 class="btn-outline-primary">Новая игра</h1>
 <p>
 <form method="post" action="/username" name="username" enctype="application/x-www-form-urlencoded"
       th:object="${usernameForm}">
@@ -15,8 +16,11 @@
         <div th:each="error : ${#fields.errors('username')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
 
     </label>
-
 </form>
 </p>
+<p>
+    <a href="/main" class="btn btn-outline-dark">На главную</a>
+</p>
+
 </body>
 </html>

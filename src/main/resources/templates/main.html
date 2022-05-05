@@ -15,9 +15,10 @@
   <a href="/username" class="btn btn-outline-dark">Новая игра</a>
   <a href="/main" class="btn btn-outline-dark">Рекорды</a>
   <a th:if="${isAdmin||isCreator}" href="/main/userspage" class="btn btn-outline-dark">Пользователи</a>
+  <a th:if="${isCreator}" href="/main/questions" class="btn btn-outline-dark">Вопросы</a>
 
     <form th:if="${loggedIn}" action="auth/logout" method="POST">
-      <button type="button" class="btn-outline-danger">Выйти</button>
+      <button type="submit" class="btn-outline-danger">Выйти</button>
     </form>
 </p>
 </body>
