@@ -12,8 +12,9 @@
     <label> Введите имя:
         <input type="text" class="text-black-50"/>
         <input type="submit" class="btn btn-dark btn-sm" name="Enter" value="Enter">
+        <div th:each="error : ${#fields.errors('username')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+
     </label>
-    <div th:each="error : ${#fields.errors('username')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
 
 </form>
 </p>

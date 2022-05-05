@@ -5,10 +5,19 @@
   <title>Главное меню</title>
 </head>
 <body>
+<span th:if="${loggedIn}"
+      th:text="'Здравствуйте, ' + ${login}"></span>
 <h1 class="btn-outline-primary">Главное меню</h1>
 <p>
   <a href="/username" class="btn btn-outline-dark">Новая игра</a>
   <a href="/main" class="btn btn-outline-dark">Рекорды</a>
+<form th:if="${isAdmin||isCreator}" action="/users" method="GET">
+  <button type="submit">Пользователи</button>
+</form>
+
+    <form th:if="${loggedIn}" action="auth/logout" method="POST">
+      <button type="submit">Выйти</button>
+    </form>
 </p>
 </body>
 </html>
