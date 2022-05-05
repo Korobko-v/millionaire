@@ -5,14 +5,14 @@
     <title>Пользователи</title>
 </head>
 <body>
-<table class="table table-hover">
+<table class="table table-striped">
     <tbody th:if="${not #lists.isEmpty(userList)}">
-    <th:block th:each="users : ${userList}">
+    <th:block th:each="u : ${userList}">
         <tr>
-            <td th:text="${users.id}"></td>
-            <td th:text="${users.username}"></td>
-            <td th:text="${users.role}"></td>
-            <td th:text="${users.status}"></td>
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.username}"></td>
+            <td th:text="${u.role}"></td>
+            <td th:text="${u.status}"></td>
         </tr>
     </th:block>
     </tbody>

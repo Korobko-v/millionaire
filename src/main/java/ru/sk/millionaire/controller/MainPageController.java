@@ -2,7 +2,6 @@ package ru.sk.millionaire.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +20,11 @@ public class MainPageController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/users")
+    @GetMapping("/userspage")
     public String usersTable(Model model) {
         List<User> userList = userRepository.findAll();
         model.addAttribute("userList", userList);
-        return "users";
+        return "userspage";
     }
 
     @GetMapping

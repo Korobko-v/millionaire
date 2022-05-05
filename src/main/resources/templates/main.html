@@ -6,17 +6,18 @@
 </head>
 <body>
 <span th:if="${loggedIn}"
-      th:text="'Здравствуйте, ' + ${login}"></span>
-<h1 class="btn-outline-primary">Главное меню</h1>
+      th:text="'Здравствуйте, ' + ${login}"
+      class="text-muted"></span>
+<h1>
+    <p class="text-dark">Главное меню</p>
+</h1>
 <p>
   <a href="/username" class="btn btn-outline-dark">Новая игра</a>
   <a href="/main" class="btn btn-outline-dark">Рекорды</a>
-<form th:if="${isAdmin||isCreator}" action="/users" method="GET">
-  <button type="submit">Пользователи</button>
-</form>
+  <a th:if="${isAdmin||isCreator}" href="/main/userspage" class="btn btn-outline-dark">Пользователи</a>
 
     <form th:if="${loggedIn}" action="auth/logout" method="POST">
-      <button type="submit">Выйти</button>
+      <button type="button" class="btn-outline-danger">Выйти</button>
     </form>
 </p>
 </body>
