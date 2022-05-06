@@ -30,4 +30,14 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    public User(String username, String password, Role role, Status status) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+    }
+
+    public User() {
+    }
 }

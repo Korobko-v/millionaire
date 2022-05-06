@@ -6,14 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.sk.millionaire.model.Question;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
 import ru.sk.millionaire.repository.QuestionRepository;
 import ru.sk.millionaire.repository.UserRepository;
-
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -34,11 +33,23 @@ public class MainPageController {
         return "userspage";
     }
 
+    @PostMapping("/userspage")
+    public User createUser(@RequestBody User user) {
+        userRepository.save(user);
+        return user;
+    }
+
     @GetMapping("/questions")
     public String questionsTable(Model model) {
         List<Question> questionsList = questionRepository.findAll();
         model.addAttribute("questionsList", questionsList);
         return "questions";
+    }
+
+    @PostMapping("/questions")
+    public Question createQuestion(@RequestBody Question question) {
+        questionRepository.save(question);
+        return question;
     }
 
     @GetMapping

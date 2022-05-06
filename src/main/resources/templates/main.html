@@ -11,15 +11,18 @@
 <h1>
     <p class="text-dark">Главное меню</p>
 </h1>
-<p>
-  <a href="/username" class="btn btn-outline-dark">Новая игра</a>
+<p th:if="${loggedIn}">
+  <a href="/game" class="btn btn-outline-dark">Новая игра</a>
   <a href="/main" class="btn btn-outline-dark">Рекорды</a>
   <a th:if="${isAdmin||isCreator}" href="/main/userspage" class="btn btn-outline-dark">Пользователи</a>
   <a th:if="${isCreator}" href="/main/questions" class="btn btn-outline-dark">Вопросы</a>
-
     <form th:if="${loggedIn}" action="auth/logout" method="POST">
       <button type="submit" class="btn-outline-danger">Выйти</button>
     </form>
+</p>
+<p th:if="${not loggedIn}">
+  <a href="/register" class="btn btn-outline-dark">Регистрация</a>
+  <a href="/auth/login" class="btn btn-outline-dark">Вход</a>
 </p>
 </body>
 </html>
