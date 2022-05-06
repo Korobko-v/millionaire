@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.0.1/css/bootstrap.css">
+    <script type="text/javascript" src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<h1>
+    <p class="text-dark">Новый вопрос</p>
+</h1>
+
+<form method="post" action="/new_question" enctype="application/x-www-form-urlencoded"th:object="${questionForm}">
+    <p>
+        <label>
+            Текст вопроса:
+            <input type="text" name="questionText">
+        </label>
+    </p>
+    <div th:each="error : ${#fields.errors('questionText')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+    <p>
+        <label>
+            Правильный ответ:
+            <input type="text" name="correctAnswer" th:value="${questionForm.correctAnswer}" class="form-control">
+        </label>
+    </p>
+    <div th:each="error : ${#fields.errors('correctAnswer')}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+    <p>
+        <label>
+            Неверный ответ:
+            <input type="text" name="wrongAnswer1" th:value="${questionForm.wrongAnswer1}" class="form-control">
+        </label>
+        <label>
+            Неверный ответ:
+            <input type="text" name="wrongAnswer2" th:value="${questionForm.wrongAnswer2}" class="form-control">
+        </label>
+        <label>
+            Неверный ответ:
+            <input type="text" name="wrongAnswer3" th:value="${questionForm.wrongAnswer3}" class="form-control">
+        </label>
+        <label>
+            Уровень сложности:
+            <select class="form-select" id ="level" name ="level">
+                    <option value = "EASY">Лёгкий</option>
+                    <option value = "MEDIUM">Средний</option>
+                    <option value = "HARD">Сложный</option>
+                    <option value = "ULTIMATE">Вопрос на миллион</option>
+            </select>
+        </label>
+    </p>
+    <p>
+        <input type="submit" class="btn btn-outline-success">
+    </p>
+</form>
+<p>
+    <a href="/main" class="btn btn-dark btn-sm">На главную</a>
+</p>
+
+</body>
+</html>
