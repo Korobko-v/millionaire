@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/5.0.1/css/bootstrap.css">
+<head>
+    <title>Топ-10</title>
+</head>
+<body>
+<h1>
+    <p class="text-dark" th:align="center">Топ-10</p>
+</h1>
+<table class="table table-striped">
+    <tbody th:if="${not #lists.isEmpty(recordList)}">
+    <tr>
+        <th>Место</th>
+        <th>Имя пользователя</th>
+        <th>Рекорд</th>
+    </tr>
+    <th:block th:each="rec : ${recordList}">
+        <tr>
+            <td th:text="${recordList.indexOf(rec) + 1}"></td>
+            <td th:text="${rec.username}"></td>
+            <td th:text="${rec.win}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+    <tbody th:if="${#lists.isEmpty(recordList)}">
+    <tr>
+        <td>Список рекордов пуст.</td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    <a href="/main" class="btn btn-outline-dark">На главную</a>
+</p>
+</body>
+</html>

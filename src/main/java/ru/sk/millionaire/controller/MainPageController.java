@@ -9,15 +9,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.sk.millionaire.model.Question;
+import ru.sk.millionaire.model.Result;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
 import ru.sk.millionaire.repository.QuestionRepository;
+import ru.sk.millionaire.repository.ResultRepository;
 import ru.sk.millionaire.repository.UserRepository;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/main")
 public class MainPageController {
+
+    @Autowired
+    private ResultRepository resultRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -77,5 +85,16 @@ public class MainPageController {
         authentication.setAuthenticated(false);
         model.addAttribute("loggedIn", false);
         return "redirect:/main";
+    }
+
+    @GetMapping("/records")
+    public String getRecords(Model model) {
+        List<Result> recordList = resultRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Result::getWin).reversed())
+                .limit(10)
+                .collect(Collectors.toList());
+        model.addAttribute("recordList", recordList);
+        return "records";
     }
 }
