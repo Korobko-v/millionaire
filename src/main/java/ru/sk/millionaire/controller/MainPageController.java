@@ -35,8 +35,7 @@ public class MainPageController {
 
     @PostMapping("/userspage")
     public User createUser(@RequestBody User user) {
-        userRepository.save(user);
-        return user;
+        return userRepository.insert(user);
     }
 
     @GetMapping("/questions")

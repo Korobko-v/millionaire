@@ -22,21 +22,19 @@ public class QuestionController {
     @GetMapping("/new_question")
     private String showQuestionForm(
             @ModelAttribute("questionForm")
-            QuestionForm questionForm) {
-        return "newQuestion";
+                    QuestionForm questionForm) {
+        return "new_question";
     }
 
     @PostMapping("/new_question")
-    public String handleRegister(
-            @ModelAttribute("questionForm")
-            @Valid
-                    QuestionForm questionForm,
-            @RequestParam("level") Level level,
-            BindingResult result
-    ) {
+    public String handleQuestionForm(@ModelAttribute("questionForm")
+                                     @Valid
+                                             QuestionForm questionForm, BindingResult result,
+                                     @RequestParam("level") Level level) {
+
 
         if (result.hasErrors()) {
-            return "/newQuestion";
+            return "new_question";
         }
 
 
@@ -44,8 +42,7 @@ public class QuestionController {
             questionRepository.insert(new Question(questionForm.getQuestionText(), questionForm.getCorrectAnswer(),
                     questionForm.getWrongAnswer1(), questionForm.getWrongAnswer2(), questionForm.getWrongAnswer3(),
                     Level.fromString(questionForm.getLevel())));
-        }
-        catch (Exception cause) {
+        } catch (Exception cause) {
             result.addError(new FieldError(
                     "form",
                     "question_text",
@@ -54,7 +51,7 @@ public class QuestionController {
         }
 
         if (result.hasErrors()) {
-            return "newQuestion";
+            return "new_question";
         }
 
         return "redirect:/main/questions";

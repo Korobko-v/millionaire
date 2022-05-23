@@ -10,11 +10,11 @@ import javax.validation.constraints.Size;
 @Setter
 public class RegistrationForm {
 
-    @Size(min = 4, max = 10, message = "Длина имени не должна быть менее 4 символов или превышать 10 символов")
+    @Size(min = 4, max = 20, message = "Длина имени не должна быть менее 4 символов или превышать 20 символов")
     @Pattern(regexp = "[a-zA-Z0-9_\\.-]*", message = "В имени пользователя допускается использовать только буквы, цифры, нижние подчёркивания, точки и дефисы")
     private String username;
 
-    @Size(min = 4, max = 10, message = "Длина пароля не должна быть менее 4 символов или превышать 10 символов")
+    @Size(min = 4, max = 20, message = "Длина пароля не должна быть менее 4 символов или превышать 20 символов")
     private String password;
 
     private String passwordConfirmation;
