@@ -16,9 +16,7 @@ import ru.sk.millionaire.repository.QuestionRepository;
 import ru.sk.millionaire.repository.ResultRepository;
 import ru.sk.millionaire.repository.UserRepository;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/main")
@@ -89,11 +87,7 @@ public class MainPageController {
 
     @GetMapping("/records")
     public String getRecords(Model model) {
-        List<Result> recordList = resultRepository.findAll()
-                .stream()
-                .sorted(Comparator.comparingInt(Result::getWin).reversed())
-                .limit(10)
-                .collect(Collectors.toList());
+        List<Result> recordList = resultRepository.findTop10();
         model.addAttribute("recordList", recordList);
         return "records";
     }

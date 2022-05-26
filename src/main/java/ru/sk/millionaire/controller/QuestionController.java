@@ -37,7 +37,6 @@ public class QuestionController {
             return "new_question";
         }
 
-
         try {
             questionRepository.insert(new Question(questionForm.getQuestionText(), questionForm.getCorrectAnswer(),
                     questionForm.getWrongAnswer1(), questionForm.getWrongAnswer2(), questionForm.getWrongAnswer3(),
