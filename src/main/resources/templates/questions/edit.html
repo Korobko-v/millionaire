@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать вопрос</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/questions/{id}(id=${question.getId()})}" th:object="${question}">
+    <label for="question_text">Введите текст вопроса: </label>
+    <input type="text" th:field="*{question_text}" id="question_text"/>
+    <label for="correct">Введите верный ответ: </label>
+    <input type="text" th:field="*{correctAnswer}" id="correct"/>
+    <label for="wrong1">Введите неверный ответ: </label>
+    <input type="text" th:field="*{wrongAnswer1}" id="wrong1"/>
+    <label for="wrong2">Введите неверный ответ: </label>
+    <input type="text" th:field="*{wrongAnswer2}" id="wrong2"/>
+    <label for="wrong3">Введите неверный ответ: </label>
+    <input type="text" th:field="*{wrongAnswer3}" id="wrong3"/>
+    <label for="level">Выберите уровень сложности: </label>
+    <select class="form-select" id ="level" name ="level">
+        <option value = "EASY">Лёгкий</option>
+        <option value = "MEDIUM">Средний</option>
+        <option value = "HARD">Сложный</option>
+        <option value = "ULTIMATE">Вопрос на миллион</option>
+    </select>
+    <br/>
+    <input type="submit" value="Обновить"/>
+</form>
+
+</body>
+</html>

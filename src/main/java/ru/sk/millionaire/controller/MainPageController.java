@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.sk.millionaire.model.Question;
 import ru.sk.millionaire.model.Result;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
@@ -42,19 +41,6 @@ public class MainPageController {
     @PostMapping("/userspage")
     public User createUser(@RequestBody User user) {
         return userRepository.insert(user);
-    }
-
-    @GetMapping("/questions")
-    public String questionsTable(Model model) {
-        List<Question> questionsList = questionRepository.findAll();
-        model.addAttribute("questionsList", questionsList);
-        return "questions";
-    }
-
-    @PostMapping("/questions")
-    public Question createQuestion(@RequestBody Question question) {
-        questionRepository.save(question);
-        return question;
     }
 
     @GetMapping

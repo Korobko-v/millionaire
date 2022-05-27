@@ -9,7 +9,7 @@
 </h1>
 
 <body>
-<form th:method="post" th:action="@{/new_question}" name="new_question" enctype="application/x-www-form-urlencoded" th:object="${questionForm}">
+<form th:method="post" th:action="@{/questions/new_question}" name="new_question" enctype="application/x-www-form-urlencoded" th:object="${questionForm}">
 
         <label>
             Текст вопроса:

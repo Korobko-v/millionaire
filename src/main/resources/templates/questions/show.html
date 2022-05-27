@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вопрос</title>
+</head>
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Текст вопроса</th>
+        <th>Верный ответ</th>
+        <th>Неверный ответ</th>
+        <th>Неверный ответ</th>
+        <th>Неверный ответ</th>
+        <th>Уровень сложности</th>
+    </tr>
+    <tr>
+<td th:text="${question.getQuestion_text()}"></td>
+<td th:text=" ${question.getCorrectAnswer()}"></td>
+<td th:text=" ${question.getWrongAnswer1()}"></td>
+<td th:text=" ${question.getWrongAnswer2()}"></td>
+<td th:text=" ${question.getWrongAnswer3()}"></td>
+<td th:text=" ${question.getLevel()}"></td>
+    </tr>
+</table>
+
+<a th:href="@{/questions/{id}/edit(id=${question.getId()})}">Редактировать</a>
+
+<form th:method="DELETE" th:action="@{/questions/{id}(id=${question.getId()})}">
+    <input type="submit" value="Удалить"/>
+</form>
+</body>
+</html>

@@ -2,6 +2,7 @@ package ru.sk.millionaire.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -9,21 +10,41 @@ import ru.sk.millionaire.form.QuestionForm;
 import ru.sk.millionaire.model.Level;
 import ru.sk.millionaire.model.Question;
 import ru.sk.millionaire.repository.QuestionRepository;
+import ru.sk.millionaire.service.QuestionService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/questions")
 public class QuestionController {
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private QuestionService questionService;
+
+    @GetMapping
+    public String index(Model model) {
+        model.addAttribute("questionsList", questionService.index());
+        return "questions/index";
+    }
+
+    @PostMapping
+    public Question createQuestion(@RequestBody Question question) {
+        questionService.save(question);
+        return question;
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("question", questionService.show(id));
+        return "questions/show";
+    }
 
     @GetMapping("/new_question")
     private String showQuestionForm(
             @ModelAttribute("questionForm")
                     QuestionForm questionForm) {
-        return "new_question";
+        return "questions/new_question";
     }
 
     @PostMapping("/new_question")
@@ -34,11 +55,11 @@ public class QuestionController {
 
 
         if (result.hasErrors()) {
-            return "new_question";
+            return "questions/new_question";
         }
 
         try {
-            questionRepository.insert(new Question(questionForm.getQuestionText(), questionForm.getCorrectAnswer(),
+            questionService.insert(new Question(questionForm.getQuestionText(), questionForm.getCorrectAnswer(),
                     questionForm.getWrongAnswer1(), questionForm.getWrongAnswer2(), questionForm.getWrongAnswer3(),
                     Level.fromString(questionForm.getLevel())));
         } catch (Exception cause) {
@@ -50,9 +71,27 @@ public class QuestionController {
         }
 
         if (result.hasErrors()) {
-            return "new_question";
+            return "questions/new_question";
         }
 
-        return "redirect:/main/questions";
+        return "redirect:/questions";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("question", questionService.show(id));
+        return "questions/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("question") Question question, @PathVariable("id") int id) {
+        questionService.update(id, question);
+        return "redirect:/questions";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        questionService.delete(id);
+        return "redirect:/questions";
     }
 }
