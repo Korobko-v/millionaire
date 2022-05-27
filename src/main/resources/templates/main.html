@@ -14,14 +14,14 @@
 <p th:if="${loggedIn}">
   <a href="/game" class="btn btn-outline-dark">Новая игра</a>
   <a href="/main/records" class="btn btn-outline-dark">Топ-10</a>
-  <a th:if="${isAdmin||isCreator}" href="/main/userspage" class="btn btn-outline-dark">Пользователи</a>
+  <a th:if="${isAdmin||isCreator}" href="/users" class="btn btn-outline-dark">Пользователи</a>
   <a th:if="${isCreator}" href="/questions" class="btn btn-outline-dark">Вопросы</a>
     <form th:if="${loggedIn}" action="auth/logout" method="POST">
       <button type="submit" class="btn-outline-danger">Выйти</button>
     </form>
 </p>
 <p th:if="${not loggedIn}">
-  <a href="/register" class="btn btn-outline-dark">Регистрация</a>
+  <a href="/users/register" class="btn btn-outline-dark">Регистрация</a>
   <a href="/auth/login" class="btn btn-outline-dark">Вход</a>
 </p>
 </body>

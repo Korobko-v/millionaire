@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.sk.millionaire.form.QuestionForm;
 import ru.sk.millionaire.model.Level;
 import ru.sk.millionaire.model.Question;
-import ru.sk.millionaire.repository.QuestionRepository;
 import ru.sk.millionaire.service.QuestionService;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/questions")
@@ -84,7 +82,13 @@ public class QuestionController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("question") Question question, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("question") @Valid Question question,
+                         BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+
+        if (bindingResult.hasErrors())
+            return "questions/edit";
+
         questionService.update(id, question);
         return "redirect:/questions";
     }

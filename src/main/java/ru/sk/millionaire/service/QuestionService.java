@@ -15,18 +15,22 @@ public class QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
+    @Transactional
     public List<Question> index() {
         return questionRepository.findAll();
     }
 
+    @Transactional
     public void save (Question question) {
         questionRepository.save(question);
     }
 
+    @Transactional
     public void insert(Question question) {
         questionRepository.insert(question);
     }
 
+    @Transactional
     public void update(int id, Question updatedQuestion) {
         Question toUpdate = show(id);
         toUpdate.setQuestion_text(updatedQuestion.getQuestion_text());
@@ -37,10 +41,12 @@ public class QuestionService {
         toUpdate.setLevel(updatedQuestion.getLevel());
     }
 
+    @Transactional
     public void delete(int id) {
         questionRepository.deleteById(id);
     }
 
+    @Transactional
     public Question show(int id) {
         return questionRepository.getById(id);
     }

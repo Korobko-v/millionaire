@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.sk.millionaire.model.Result;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
-import ru.sk.millionaire.repository.QuestionRepository;
 import ru.sk.millionaire.repository.ResultRepository;
 import ru.sk.millionaire.repository.UserRepository;
 
@@ -26,22 +25,6 @@ public class MainPageController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private QuestionRepository questionRepository;
-
-    @GetMapping("/userspage")
-    public String usersTable(Model model) {
-        List<User> userList = userRepository.findAll();
-        userList.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));
-        model.addAttribute("userList", userList);
-        return "userspage";
-    }
-
-    @PostMapping("/userspage")
-    public User createUser(@RequestBody User user) {
-        return userRepository.insert(user);
-    }
 
     @GetMapping
     public String main(Model model, Authentication authentication) {

@@ -3,12 +3,10 @@ package ru.sk.millionaire.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.sk.millionaire.form.RegistrationForm;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
@@ -16,9 +14,10 @@ import ru.sk.millionaire.model.auth.Status;
 import ru.sk.millionaire.repository.UserRepository;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -27,11 +26,24 @@ public class UserController {
     @Autowired
     private PasswordEncoder encoder;
 
+    @GetMapping
+    public String usersTable(Model model) {
+        List<User> userList = userRepository.findAll();
+        userList.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));
+        model.addAttribute("userList", userList);
+        return "users/index";
+    }
+
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userRepository.insert(user);
+    }
+
     @GetMapping("/register")
     private String showRegisterForm(
             @ModelAttribute("form")
                     RegistrationForm form) {
-        return "register";
+        return "users/register";
     }
     @PostMapping("/register")
     public String handleRegister(
@@ -46,7 +58,7 @@ public class UserController {
         }
 
         if (result.hasErrors()) {
-            return "/register";
+            return "users/register";
         }
 
         String encryptedPassword = encoder.encode(form.getPassword());
@@ -63,7 +75,7 @@ public class UserController {
         }
 
         if (result.hasErrors()) {
-            return "register";
+            return "users/register";
         }
 
         return "redirect:/main";

@@ -16,7 +16,7 @@
         <tr>
             <td th:text="${q.id}"></td>
             <td>
-                <a th:href="@{/questions/{id}(id=${q.getId()})}" th:text="${q.question_text}"></a>
+                <a th:href="@{/questions/{id}(id=${q.getId()})}" class="btn-outline-dark" th:text="${q.question_text}"></a>
             </td>
             <td th:text="${q.level}"></td>
         </tr>
