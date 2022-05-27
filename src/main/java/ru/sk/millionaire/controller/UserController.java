@@ -11,7 +11,7 @@ import ru.sk.millionaire.form.RegistrationForm;
 import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
 import ru.sk.millionaire.model.auth.Status;
-import ru.sk.millionaire.repository.UserRepository;
+import ru.sk.millionaire.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,22 +21,22 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder encoder;
 
     @GetMapping
     public String usersTable(Model model) {
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userService.index();
         userList.sort((o1, o2) -> (int) (o1.getId() - o2.getId()));
         model.addAttribute("userList", userList);
         return "users/index";
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.insert(user);
+    public void createUser(@RequestBody User user) {
+        userService.insert(user);
     }
 
     @GetMapping("/register")
@@ -64,7 +64,7 @@ public class UserController {
         String encryptedPassword = encoder.encode(form.getPassword());
 
         try {
-            userRepository.insert(new User(form.getUsername(), form.getPassword(), Role.USER, Status.ACTIVE));
+            userService.insert(new User(form.getUsername(), encryptedPassword, Role.USER, Status.ACTIVE));
         }
         catch (Exception cause) {
             result.addError(new FieldError(
