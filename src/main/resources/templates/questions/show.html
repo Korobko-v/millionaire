@@ -30,5 +30,7 @@
 <form th:method="DELETE" th:action="@{/questions/{id}(id=${question.getId()})}">
     <input type="submit" class="btn btn-outline-danger" value="Удалить"/>
 </form>
+
+<a href="/questions" class="btn btn-outline-dark">К списку вопросов</a>
 </body>
 </html>

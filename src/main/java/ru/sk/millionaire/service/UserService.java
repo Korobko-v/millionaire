@@ -46,4 +46,9 @@ public class UserService {
     public User show(int id) {
         return userRepository.getById(id);
     }
+
+    @Transactional
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
 }

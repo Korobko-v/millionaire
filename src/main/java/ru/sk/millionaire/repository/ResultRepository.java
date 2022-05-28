@@ -11,11 +11,4 @@ import java.util.stream.Collectors;
 @Repository
 public interface ResultRepository extends JpaRepository<Result, Integer> {
 
-    default List<Result> findTop10() {
-        return findAll()
-                .stream()
-                .sorted(Comparator.comparingInt(Result::getWin).reversed())
-                .limit(10)
-                .collect(Collectors.toList());
-    }
 }

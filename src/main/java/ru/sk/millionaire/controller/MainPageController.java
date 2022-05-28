@@ -5,26 +5,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.sk.millionaire.model.Result;
-import ru.sk.millionaire.model.User;
 import ru.sk.millionaire.model.auth.Role;
-import ru.sk.millionaire.repository.ResultRepository;
-import ru.sk.millionaire.repository.UserRepository;
-
-import java.util.List;
+import ru.sk.millionaire.service.UserService;
 
 @Controller
 @RequestMapping("/main")
 public class MainPageController {
 
     @Autowired
-    private ResultRepository resultRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping
     public String main(Model model, Authentication authentication) {
@@ -35,8 +25,8 @@ public class MainPageController {
 
         if (loggedIn) {
             username = authentication.getName();
-            isAdmin = userRepository.findByUsername(username).get().getRole().equals(Role.ADMIN);
-            isCreator = userRepository.findByUsername(username).get().getRole().equals(Role.CREATOR);
+            isAdmin = userService.findByUsername(username).getRole().equals(Role.ADMIN);
+            isCreator = userService.findByUsername(username).getRole().equals(Role.CREATOR);
         }
 
         model.addAttribute("login", username);
@@ -45,19 +35,5 @@ public class MainPageController {
         model.addAttribute("isCreator", isCreator);
 
         return "main";
-    }
-
-    @PostMapping("/logout")
-    public String logout(Model model, Authentication authentication) {
-        authentication.setAuthenticated(false);
-        model.addAttribute("loggedIn", false);
-        return "redirect:/main";
-    }
-
-    @GetMapping("/records")
-    public String getRecords(Model model) {
-        List<Result> recordList = resultRepository.findTop10();
-        model.addAttribute("recordList", recordList);
-        return "records";
     }
 }
