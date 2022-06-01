@@ -1,55 +1,19 @@
 package ru.sk.millionaire.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.sk.millionaire.model.Question;
-import ru.sk.millionaire.repository.QuestionRepository;
-
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Service
-public class QuestionService {
+public interface QuestionService {
 
-    @Autowired
-    QuestionRepository questionRepository;
+    List<Question> index();
 
-    @Transactional
-    public List<Question> index() {
+    void save (Question question);
 
-        return questionRepository.findAll().stream().sorted(Comparator.comparingInt(Question::getId)).collect(Collectors.toList());
-    }
+    void insert(Question question);
 
-    @Transactional
-    public void save (Question question) {
-        questionRepository.save(question);
-    }
+    void update(int id, Question updatedQuestion);
 
-    @Transactional
-    public void insert(Question question) {
-        questionRepository.insert(question);
-    }
+    void delete(int id);
 
-    @Transactional
-    public void update(int id, Question updatedQuestion) {
-        Question toUpdate = show(id);
-        toUpdate.setQuestion_text(updatedQuestion.getQuestion_text());
-        toUpdate.setCorrectAnswer(updatedQuestion.getCorrectAnswer());
-        toUpdate.setWrongAnswer1(updatedQuestion.getWrongAnswer1());
-        toUpdate.setWrongAnswer2(updatedQuestion.getWrongAnswer2());
-        toUpdate.setWrongAnswer3(updatedQuestion.getWrongAnswer3());
-        toUpdate.setLevel(updatedQuestion.getLevel());
-    }
-
-    @Transactional
-    public void delete(int id) {
-        questionRepository.deleteById(id);
-    }
-
-    @Transactional
-    public Question show(int id) {
-        return questionRepository.getById(id);
-    }
+    Question show(int id);
 }
